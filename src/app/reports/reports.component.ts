@@ -56,11 +56,16 @@ SelectedReport?: Reports;
     });
   }
 
-  addReport(report: Reports): void {
-    this.reportsService.addReport(report)
-    .subscribe(report => {
-      this.reports.push(report);
-    });
+  addReport(): void {
+    if (this.form?.valid) {
+      console.log("this is valid");
+
+      this.reportsService.addReport(this.newReport).subscribe(() => {
+       console.log("New Vechile Added");
+      });
+
+    }
+
   }
 
   updateReport(report: Reports): void {
@@ -79,6 +84,17 @@ SelectedReport?: Reports;
 
   ngOnInit() {
     this.getReports();
+  }
+
+  showDetails(report: Reports) {
+    this.SelectedReport = report;
+    console.log(report);
+  }
+
+  showUpdateForm(report: Reports) {
+    this.showUpdate = true;
+    this.selectedReportForUpdate = report;
+    console.log(report);
   }
 }
 
