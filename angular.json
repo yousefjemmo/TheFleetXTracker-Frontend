@@ -63,7 +63,9 @@
               "browserTarget": "TheFleetXTracker-frontend:build:production"
             },
             "development": {
-              "browserTarget": "TheFleetXTracker-frontend:build:development"
+              "browserTarget": "TheFleetXTracker-frontend:build:development",
+              "proxyConfig": "./proxy.conf.json"
+
             }
           },
           "defaultConfiguration": "development"

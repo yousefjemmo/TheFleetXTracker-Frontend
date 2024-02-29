@@ -1,0 +1,88 @@
+<!-- reports.component.html -->
+
+<div>
+  <h2>Reports</h2>
+
+  <!-- Add Report Form -->
+  <form (submit)="addReport(newReport)">
+    <label for="name">Name:</label>
+    <input id="name" [(ngModel)]="newReport.name" name="name" required>
+
+    <label for="country">Country:</label>
+    <input id="country" [(ngModel)]="newReport.country" name="country" required>
+
+    <label for="city">City:</label>
+    <input id="city" [(ngModel)]="newReport.city" name="city" required>
+
+    <label for="hub">Hub:</label>
+    <input id="hub" [(ngModel)]="newReport.hub" name="hub" required>
+
+    <label for="status">Status:</label>
+    <input id="status" [(ngModel)]="newReport.status" name="status" required>
+
+    <label for="date">Date:</label>
+    <input id="date" [(ngModel)]="newReport.date" name="date" required>
+
+    <button type="submit">Add Report</button>
+  </form>
+
+  <!-- Reports Table -->
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>City</th>
+      <th>Hub</th>
+      <th>Status</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let report of reports">
+      <td>{{ report.id }}</td>
+      <td>{{ report.name }}</td>
+      <td>{{ report.country }}</td>
+      <td>{{ report.city }}</td>
+      <td>{{ report.hub }}</td>
+      <td>{{ report.status }}</td>
+      <td>{{ report.date }}</td>
+
+      <td>
+        <button (click)="getReportById(report.id)">Details</button>
+        <button (click)="deleteReport(report.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>y
+
+
+  <!-- Update Report Form -->
+  <form *ngIf="SelectedReport" (submit)="updateReport(SelectedReport)">
+    <h3>Edit Report</h3>
+
+    <label for="edit-name">Name:</label>
+    <input id="edit-name" [(ngModel)]="SelectedReport.name" name="edit-name" required>
+
+    <label for="edit-country">Country:</label>
+    <input id="edit-country" [(ngModel)]="SelectedReport.country" name="edit-country" required>
+
+    <label for="edit-city">City:</label>
+    <input id="edit-city" [(ngModel)]="SelectedReport.city" name="edit-city" required>
+
+    <label for="edit-hub">Hub:</label>
+    <input id="edit-hub" [(ngModel)]="SelectedReport.hub" name="edit-hub" required>
+
+    <label for="edit-status">Status:</label>
+    <input id="edit-status" [(ngModel)]="SelectedReport.status" name="edit-status" required>
+
+    <label for="edit-date">Date:</label>
+    <input id="edit-date" [(ngModel)]="SelectedReport.date" name="edit-date" required>
+
+    <!-- Add more fields as needed -->
+
+    <button type="submit">Update Report</button>
+  </form>
+</div>
+
