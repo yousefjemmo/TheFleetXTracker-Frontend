@@ -1,62 +1,128 @@
-/* Global styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-}
-
-h1 {
-  text-align: center;
+  background-color: #f0f0f0; /* Light grey background */
 }
 
 .mat-tab-group {
+  width: 70%;
+  margin: 20px auto;
+}
+
+.mat-tab-body-wrapper {
+  background-color: #fff; /* White background for tab content */
+  padding: 20px;
+}
+
+.report-list {
+  background-color: #fff; /* White background for the report list */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.reports {
+  border-bottom: 1px solid #ccc; /* Separator between reports */
+  padding: 10px 0;
+}
+
+.report-list h2 {
+  color: #3498db; /* Blue header text color */
+}
+
+.btn-show-all-reports,
+.btn-show-details,
+.btn-delete,
+.btn-update,
+.btn-filter-by-id,
+.btn-filter-by-name,
+.btn-filter-by-country,
+.btn-filter-by-city,
+.btn-filter-by-hub,
+.btn-filter-by-status,
+.btn-filter-by-multiple-fields,
+button[type="submit"] {
+  background-color: #3498db; /* Blue button background color */
+  color: #fff; /* White button text color */
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn-show-all-reports:hover,
+.btn-show-details:hover,
+.btn-delete:hover,
+.btn-update:hover,
+.btn-filter-by-id:hover,
+.btn-filter-by-name:hover,
+.btn-filter-by-country:hover,
+.btn-filter-by-city:hover,
+.btn-filter-by-hub:hover,
+.btn-filter-by-status:hover,
+.btn-filter-by-multiple-fields:hover,
+button[type="submit"]:hover {
+  background-color: #297fb8; /* Darker blue on hover */
+}
+
+/* Filter input styling */
+label {
+  display: block;
+  margin-top: 10px;
+  color: #3498db; /* Blue label color */
+}
+
+input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #3498db; /* Blue border color */
+  border-radius: 4px;
+}
+
+/* Styled details section */
+.selected-report-details,
+.filtered-report-details,
+.update-form,
+.find-report-form,
+.add-report-form,
+.delete-report-form {
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Success message for added report */
+.isReportAdded,
+.isReportDeleted {
+  color: #2ecc71; /* Green success message color */
+}
+
+/* Error message for no report found */
+p.NoReportFound {
+  color: #e74c3c; /* Red error message color */
+}
+
+/* Table styling for the report list */
+table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 20px;
 }
 
-/* Report List */
-.report-list {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  align-items: center;
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Table border color */
 }
 
-.report-list button,
-.update-report-form button[type="submit"],
-.find-report-form button,
-.add-report-form button[type="submit"] {
-  background-color: lightblue;
-  color: #fff;
-  border: none;
-  padding: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-right: 10px;
+th {
+  background-color: #3498db; /* Blue header background color */
+  color: #fff; /* White header text color */
 }
-
-/* Update Report Form */
-.update-report-form label,
-.update-report-form input[type="text"] {
-  width: 300px;
-  padding: 5px;
-}
-
-/* Find Report Form */
-.find-report-form input[type="text"],
-.find-report-form button {
-  width: 300px;
-  padding: 5px;
-  margin-top: 10px;
-}
-
-/* Add Report Form */
-.add-report-form label,
-.add-report-form input[type="text"] {
-  width: 300px;
-  padding: 5px;
-}
-
-.add-report-form button[type="submit"] {
-  margin-top: 10px;
-}
-
-

@@ -33,6 +33,16 @@ SelectedReport?: Reports;
   cities = ['New York', 'Los Angeles', 'Chicago', 'Houston'];
   hubs = ['Hub1', 'Hub2', 'Hub3', 'Hub4'];
   date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  reportIdForDelete: any;
+  isReportDeleted: any;
+  filteredReport: any;
+  reportName: any;
+  reportCountry: any;
+  reportCity: any;
+  reportHub: any;
+  reportStatus: any;
+  reportDate: any;
+  reportMultipleFields: any;
   onselect(report: Reports): void {
     this.SelectedReport = report;
 
@@ -57,22 +67,30 @@ SelectedReport?: Reports;
   }
 
   addReport(): void {
-    if (this.form?.valid) {
-      console.log("this is valid");
+    const {id, name, country, city, hub, status, date} = this.newReport;
 
-      this.reportsService.addReport(this.newReport).subscribe(() => {
-       console.log("New Vechile Added");
-      });
-
+    if (!id || !name || !country || !city || !hub || !status || !date) {
+      return;
     }
+    this.newReport = {
+      id: 0,
+      name: name,
+      country: country,
+      city: city,
+      hub: hub,
+      status: status,
+      date: new Date().getTime()
+    };
+    this.reportsService.addReport(this.newReport).subscribe();
+    this.isReportAdded = true;
 
   }
 
   updateReport(report: Reports): void {
     this.reportsService.updateReport(report)
-    .subscribe(() => {
-      this.getReports();
-    });
+      .subscribe(() => {
+        this.reports = this.reports.map(r => r.id === report.id ? report : r);
+      });
   }
 
   getReportById(id: number): void {
@@ -86,15 +104,117 @@ SelectedReport?: Reports;
     this.getReports();
   }
 
-  showDetails(report: Reports) {
-    this.SelectedReport = report;
-    console.log(report);
-  }
-
   showUpdateForm(report: Reports) {
     this.showUpdate = true;
     this.selectedReportForUpdate = report;
     console.log(report);
+  }
+
+  filterReportsByStatus(status: string) {
+    this.reports = this.reports.filter(r => r.status === status);
+  }
+
+  deleteReportById() {
+    this.reportsService.deleteReport(this.reportId)
+    .subscribe(() => {
+      this.deleteMessage = "Report deleted successfully";
+      this.getReports();
+    });
+  }
+
+  filterReportsById(): void {
+    if (this.reportId) {
+      this.reports = this.reports.filter(r => r.id === this.reportId);
+
+    }else
+    {
+      console.log("No id provided");
+    }
+  }
+
+
+  filterReportsByName() {
+    if (this.reportName) {
+      this.reports = this.reports.filter(r => r.name === this.reportName);
+    } else {
+        // If no name is provided, show all reports
+        this.getReports();
+      }
+    }
+
+
+  filterReportsByCountry() {
+    if (this.reportCountry) {
+      this.reports = this.reports.filter(r => r.country === this.reportCountry);
+    } else {
+      // If no country is provided, show all reports
+      this.getReports();
+    }
+
+  }
+
+  filterReportsByCity() {
+    if (this.reportCity) {
+      this.reports = this.reports.filter(r => r.city === this.reportCity);
+    } else {
+      // If no city is provided, show all reports
+      this.getReports();
+    }
+  }
+
+  filterReportsByHub() {
+    if (this.reportHub) {
+      this.reports = this.reports.filter(r => r.hub === this.reportHub);
+    } else {
+      // If no hub is provided, show all reports
+      this.getReports();
+    }
+  }
+
+  filterReportsByMultipleFields() {
+    if (this.reportMultipleFields) {
+      const searchTerm = this.reportMultipleFields.toLowerCase();
+      this.reports = this.reports.filter(
+        r =>
+          r.name.toLowerCase().includes(searchTerm) ||
+          r.country.toLowerCase().includes(searchTerm) ||
+          r.city.toLowerCase().includes(searchTerm) ||
+          r.hub.toLowerCase().includes(searchTerm) ||
+          r.status.toLowerCase().includes(searchTerm)
+      );
+    } else {
+      // If no field is provided, show all reports
+      this.getReports();
+    }
+  }
+
+  filterOptions = {
+    showId: false,
+    showName: false,
+    showCountry: false,
+    showCity: false,
+    showHub: false,
+    showStatus: false,
+  };
+  selectedReport: any;
+
+
+  applyFilters() {
+    this.reports = this.reports.filter(r => {
+      return (
+        (this.filterOptions.showId ? r.id === this.reportId : true) &&
+        (this.filterOptions.showName ? r.name === this.reportName : true) &&
+        (this.filterOptions.showCountry ? r.country === this.reportCountry : true) &&
+        (this.filterOptions.showCity ? r.city === this.reportCity : true) &&
+        (this.filterOptions.showHub ? r.hub === this.reportHub : true) &&
+        (this.filterOptions.showStatus ? r.status === this.reportStatus : true)
+      );
+    });
+  }
+
+
+  filterReports() {
+    this.reports = this.reports.filter(r => r.id === this.reportId);
   }
 }
 

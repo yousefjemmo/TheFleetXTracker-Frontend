@@ -12,9 +12,12 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatIconModule} from "@angular/material/icon";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTabsModule} from "@angular/material/tabs";
-import {MatInputModule} from '@angular/material/input';
 import {MatLegacyListModule} from "@angular/material/legacy-list";
 import {MatButtonModule} from "@angular/material/button";
+import {MatTableModule} from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -36,7 +39,13 @@ import {MatButtonModule} from "@angular/material/button";
     MatTabsModule,
     MatInputModule,
     MatLegacyListModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatTabsModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

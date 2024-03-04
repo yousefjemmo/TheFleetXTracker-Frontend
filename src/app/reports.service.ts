@@ -30,15 +30,17 @@ export class ReportsService {
   }
 
   deleteReport(id: number): Observable<Reports> {
-    const url = `api/heFleetXTracker/${id}`;
+    const url = `api/TheFleetXTracker/${id}`;
     return this.http.delete<Reports>(url, httpOptions);
   }
 
   addReport(report: Reports): Observable<Reports> {
-    return this.http.post<Reports>('api/TheFleetXTracker', JSON.stringify(report), httpOptions);
+    return this.http.post<Reports>('api/TheFleetXTracker/', JSON.stringify(report), httpOptions);
   }
 
   updateReport(report: Reports): Observable<Reports> {
     return this.http.put<Reports>('api/TheFleetXTracker/', JSON.stringify(report), httpOptions);
   }
+
+
 }
