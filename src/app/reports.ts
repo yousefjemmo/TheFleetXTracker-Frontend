@@ -5,5 +5,7 @@ export interface Reports {
   city: string;
   hub: string;
   status: string;
+  stops: number;
+  kilometers: string;
   date: number;
 }

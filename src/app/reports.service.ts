@@ -39,8 +39,21 @@ export class ReportsService {
   }
 
   updateReport(report: Reports): Observable<Reports> {
-    return this.http.put<Reports>('api/TheFleetXTracker/', JSON.stringify(report), httpOptions);
+    const url = `api/TheFleetXTracker/${report.id}`;
+    return this.http.put<Reports>(url, JSON.stringify(report), httpOptions);
   }
+
+
+  ExportToExcel(): Observable<any> {
+    return this.http.get('api/TheFleetXTracker/ExportToExcel', { responseType: 'blob' });
+  }
+
+
+
+
+
+
+
 
 
 }

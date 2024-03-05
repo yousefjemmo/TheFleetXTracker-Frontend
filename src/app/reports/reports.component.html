@@ -1,92 +1,151 @@
 <h1>Reports</h1>
 
-<mat-tab-group>
-  <mat-tab label="Reports">
-<div class="report-list">
-  <h1>Reports</h1>
-  <table>
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Country</th>
-      <th>City</th>
-      <th>Hub</th>
-      <th>Status</th>
-      <th>Date</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let report of reports" class="reports">
-      <td>{{ report.id }}</td>
-      <td>{{ report.name }}</td>
-      <td>{{ report.country }}</td>
-      <td>{{ report.city }}</td>
-      <td>{{ report.hub }}</td>
-      <td>{{ report.status }}</td>
-      <td>{{ report.date | date: 'yyyy-MM-dd' }}</td>
-      <td>
-        <button (click)="showUpdateForm(report)">Update</button>
-        <button (click)="deleteReport(report.id)">Delete</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
-  <!-- Selected Report Details -->
-  <div class="selected-report-details" *ngIf="SelectedReport">
-    <h2>Report Details</h2>
-    <p><strong>Report ID:</strong> {{ SelectedReport.id }}</p>
-    <p><strong>Name:</strong> {{ SelectedReport.name }}</p>
-    <p><strong>Country:</strong> {{ SelectedReport.country }}</p>
-    <p><strong>City:</strong> {{ SelectedReport.city }}</p>
-    <p><strong>Hub:</strong> {{ SelectedReport.hub }}</p>
-    <p><strong>Status:</strong> {{ SelectedReport.status }}</p>
-    <p><strong>Date:</strong> {{ SelectedReport.date | date: 'yyyy-MM-dd' }}</p>
-  </div>
+<div class="export-button">
+  <button mat-raised-button color="primary" (click)="exportToExcel()">
+    <mat-icon>file_download</mat-icon> Export to Excel
+  </button>
 </div>
 
-<!-- Table for Filter Form -->
+<mat-tab-group>
+  <mat-tab label="Reports">
+    <div class="report-list">
+      <h1>Reports</h1>
+      <table>
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Hub</th>
+          <th>Status</th>
+          <th>Stops</th>
+          <th>Kilometers</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let report of reports" class="reports">
+          <td>{{ report.id }}</td>
+          <td>{{ report.name }}</td>
+          <td>{{ report.country }}</td>
+          <td>{{ report.city }}</td>
+          <td>{{ report.hub }}</td>
+          <td>{{ report.status }}</td>
+          <td>{{ report.stops }}</td>
+          <td>{{ report.kilometers }}</td>
+          <td>{{ report.date | date: 'yyyy-MM-dd' }}</td>
+          <td>
+            <button mat-icon-button color="primary" (click)="showUpdateForm(report)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="deleteReport(report.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- Selected Report Details -->
+      <div class="selected-report-details" *ngIf="SelectedReport">
+        <h2>Report Details</h2>
+        <p><strong>Report ID:</strong> {{ SelectedReport.id }}</p>
+        <p><strong>Name:</strong> {{ SelectedReport.name }}</p>
+        <p><strong>Country:</strong> {{ SelectedReport.country }}</p>
+        <p><strong>City:</strong> {{ SelectedReport.city }}</p>
+        <p><strong>Hub:</strong> {{ SelectedReport.hub }}</p>
+        <p><strong>Status:</strong> {{ SelectedReport.status }}</p>
+        <p><strong>Stops:</strong> {{ SelectedReport.stops }}</p>
+        <p><strong>Kilometers:</strong> {{ SelectedReport.kilometers }}</p>
+        <p><strong>Date:</strong> {{ SelectedReport.date | date: 'yyyy-MM-dd' }}</p>
+      </div>
+    </div>
+
+    <!-- Table for Filter Form -->
     <div class="filter-form">
       <h2>Filter Reports</h2>
       <div class="filter-options">
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showId"> ID</label>
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showName"> Name</label>
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showCountry"> Country</label>
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showCity"> City</label>
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showHub"> Hub</label>
-        <label><input type="checkbox" [(ngModel)]="filterOptions.showStatus"> Status</label>
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showId"> ID
+        </label>
+
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showName"> Name
+        </label>
+
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showCountry"> Country
+        </label>
+
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showCity"> City
+        </label>
+
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showHub"> Hub
+        </label>
+
+        <label>
+          <mat-icon>check_box</mat-icon>
+          <input type="checkbox" [(ngModel)]="filterOptions.showStatus"> Status
+        </label>
       </div>
 
       <div class="filter-inputs">
-        <label *ngIf="filterOptions.showId" for="filterById">Filter by ID:</label>
+        <label *ngIf="filterOptions.showId" for="filterById">
+          <mat-icon>filter_alt</mat-icon> Filter by ID:
+        </label>
         <input *ngIf="filterOptions.showId" type="number" id="filterById" name="filterById" [(ngModel)]="reportId" placeholder="Enter Report ID">
 
-        <label *ngIf="filterOptions.showName" for="filterByName">Filter by Name:</label>
+        <label *ngIf="filterOptions.showName" for="filterByName">
+          <mat-icon>filter_alt</mat-icon> Filter by Name:
+        </label>
         <input *ngIf="filterOptions.showName" type="text" id="filterByName" name="filterByName" [(ngModel)]="reportName" placeholder="Enter Report Name">
 
-        <label *ngIf="filterOptions.showCountry" for="filterByCountry">Filter by Country:</label>
+        <label *ngIf="filterOptions.showCountry" for="filterByCountry">
+          <mat-icon>filter_alt</mat-icon> Filter by Country:
+        </label>
         <input *ngIf="filterOptions.showCountry" type="text" id="filterByCountry" name="filterByCountry" [(ngModel)]="reportCountry" placeholder="Enter Report Country">
 
-        <label *ngIf="filterOptions.showCity" for="filterByCity">Filter by City:</label>
+        <label *ngIf="filterOptions.showCity" for="filterByCity">
+          <mat-icon>filter_alt</mat-icon> Filter by City:
+        </label>
         <input *ngIf="filterOptions.showCity" type="text" id="filterByCity" name="filterByCity" [(ngModel)]="reportCity" placeholder="Enter Report City">
 
-        <label *ngIf="filterOptions.showHub" for="filterByHub">Filter by Hub:</label>
+        <label *ngIf="filterOptions.showHub" for="filterByHub">
+          <mat-icon>filter_alt</mat-icon> Filter by Hub:
+        </label>
         <input *ngIf="filterOptions.showHub" type="text" id="filterByHub" name="filterByHub" [(ngModel)]="reportHub" placeholder="Enter Report Hub">
 
-        <label *ngIf="filterOptions.showStatus" for="filterByStatus">Filter by Status:</label>
+        <label *ngIf="filterOptions.showStatus" for="filterByStatus">
+          <mat-icon>filter_alt</mat-icon> Filter by Status:
+        </label>
         <input *ngIf="filterOptions.showStatus" type="text" id="filterByStatus" name="filterByStatus" [(ngModel)]="reportStatus" placeholder="Enter Report Status">
 
-        <button (click)="filterReports()">Filter Reports</button>
+        <button mat-raised-button color="primary" (click)="filterReports()">
+          <mat-icon>search</mat-icon> Filter Reports
+        </button>
       </div>
     </div>
 
 
-  </mat-tab>
+
+
     <div class="update-form" *ngIf="showUpdate">
       <h2>Update Report</h2>
       <form class="update-report-form" (submit)="updateReport(selectedReportForUpdate)" #updateForm="ngForm">
+
+        <label for="updateReportId">ID:</label>
+        <input type="number" id="updateReportId" name="updateReportId" [(ngModel)]="selectedReportForUpdate.id" required>
+
         <label for="updateReportName">Name:</label>
         <input type="text" id="updateReportName" name="updateReportName" [(ngModel)]="selectedReportForUpdate.name" required>
 
@@ -106,37 +165,68 @@
         <input type="text" id="updateReportDate" name="updateReportDate" [(ngModel)]="selectedReportForUpdate.date" required>
 
         <button type="submit">Update Report</button>
+
       </form>
     </div>
+  </mat-tab>
 
 
-<!-- Add Report form -->
-<mat-tab label="Add Report">
-<div class="add-form">
-  <h2>Add New Report</h2>
-  <form class="add-report-form" (submit)="addReport()" #addForm="ngForm">
-    <label for="reportName">Name:</label>
-    <input type="text" id="reportName" name="reportName" [(ngModel)]="reportName" required>
 
-    <label for="reportCountry">Country:</label>
-    <input type="text" id="reportCountry" name="reportCountry" [(ngModel)]="reportCountry" required>
 
-    <label for="reportCity">City:</label>
-    <input type="text" id="reportCity" name="reportCity" [(ngModel)]="reportCity" required>
+  <!-- Add vehicle form -->
+  <mat-tab label="Add vehicle">
+    <div class="add-form">
+      <h2>Add New vehicle</h2>
+      <form class="add-vehicle-form" (submit)="addReport()" #addForm="ngForm">
+        <label for="addReportName">Name:</label>
+        <input type="text" id="addReportName" name="addReportName" [(ngModel)]="newReport.name" required>
 
-    <label for="reportHub">Hub:</label>
-    <input type="text" id="reportHub" name="reportHub" [(ngModel)]="reportHub" required>
+        <label for="addReportCountry">Country:</label>
+        <input type="text" id="addReportCountry" name="addReportCountry" [(ngModel)]="newReport.country" required>
 
-    <label for="reportStatus">Status:</label>
-    <input type="text" id="reportStatus" name="reportStatus" [(ngModel)]="reportStatus" required>
+        <label for="addReportCity">City:</label>
+        <input type="text" id="addReportCity" name="addReportCity" [(ngModel)]="newReport.city" required>
 
-    <label for="reportDate">Date:</label>
-    <input type="text" id="reportDate" name="reportDate" [(ngModel)]="reportDate" required>
+        <label for="addReportHub">Hub:</label>
+        <input type="text" id="addReportHub" name="addReportHub" [(ngModel)]="newReport.hub" required>
 
-    <button type="submit">Add Report</button>
+        <label for="addReportStatus">Status:</label>
+        <input type="text" id="addReportStatus" name="addReportStatus" [(ngModel)]="newReport.status" required>
 
-  </form>
-</div>
-</mat-tab>
+        <label for="addReportStops">Stops:</label>
+        <input type="number" id="addReportStops" name="addReportStops" [(ngModel)]="newReport.stops" required>
+
+        <label for="addReportKilometers">Kilometers:</label>
+        <input type="number" id="addReportKilometers" name="addReportKilometers" [(ngModel)]="newReport.kilometers" required>
+
+        <label for="addReportDate">Date:</label>
+        <input type="text" id="addReportDate" name="addReportDate" [(ngModel)]="newReport.date" required>
+
+        <button type="submit">Add Vehicle</button>
+      </form>
+    </div>
+  </mat-tab>
+
+  <!-- Search vehicle form -->
+
+  <mat-tab label="Search vehicle">
+    <div class ="find-vehicle-form">
+      <div>
+        <h2>Search vehicle</h2>
+        <label for="searchReportId">Search by ID:</label>
+        <input type="number" id="searchReportId" name="searchReportId" [(ngModel)]="searchReportId" required>
+        <button (click)="getReportById(reportId)">Search</button>
+      </div>
+      <div *ngIf="selectedReportForGetReports">
+        <h2>Vehicle Details</h2>
+        <p><strong>Report ID:</strong> {{ selectedReportForGetReports.id }}</p>
+        <p><strong>Name:</strong> {{ selectedReportForGetReports.name }}</p>
+        <p><strong>Date:</strong> {{ selectedReportForGetReports.date | date: 'yyyy-MM-dd' }}</p>
+      </div>
+      <div *ngIf="selectedReportForGetReports == null && reportId">
+        <p>No vehicle found with this ID</p>
+      </div>
+    </div>
+  </mat-tab>
 </mat-tab-group>
 

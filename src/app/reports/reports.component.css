@@ -126,3 +126,19 @@ th {
   background-color: #3498db; /* Blue header background color */
   color: #fff; /* White header text color */
 }
+
+.export-button {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 9000; /* Ensure the button is above other elements */
+}
+
+.export-button button {
+  display: flex;
+  align-items: center;
+}
+
+.export-button mat-icon {
+  margin-right: 8px; /* Adjust the spacing between the icon and text */
+}

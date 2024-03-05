@@ -2,7 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {Reports} from "../reports";
 import {ReportsService} from "../reports.service";
 import {NgForm} from "@angular/forms";
-import {dateTimestampProvider} from "rxjs/internal/scheduler/dateTimestampProvider";
 import {formatDate} from "@angular/common";
 
 
@@ -13,25 +12,41 @@ import {formatDate} from "@angular/common";
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent {
-@ViewChild('reportForm') form: NgForm | undefined;
-reports: Reports[] = [];
-SelectedReport?: Reports;
+  @ViewChild('reportForm') form: NgForm | undefined;
+  reports: Reports[] = [];
+  SelectedReport?: Reports;
   showUpdate: any;
-  selectedReportForUpdate: Reports = { id: 0, name: '', country: '', city: '', hub: '', status: '', date: 0 };
+  selectedReportForUpdate: Reports = {
+    id: 0,
+    name: '',
+    country: '',
+    city: '',
+    hub: '',
+    status: '',
+    stops: 0,
+    kilometers: "",
+    date: 0
+  };
   updateMessage: string = "";
-  newReport: Reports = { id: 0, name: '', country: '', city: '', hub: '', status: '', date: 0 };
+  newReport: Reports = {id: 0, name: '', country: '', city: '', hub: '', status: '', stops: 0, kilometers: "", date: 0};
   isReportAdded: boolean = false;
   showReportsFlag: any;
   deleteMessage: String = "";
   reportId: number = 0;
-  reportUpdate: Reports = { id: 0, name: '', country: '', city: '', hub: '', status: '', date: 0 };
+  reportUpdate: Reports = {
+    id: 0,
+    name: '',
+    country: '',
+    city: '',
+    hub: '',
+    status: '',
+    stops: 0,
+    kilometers: "",
+    date: 0
+  };
   selectedReportForGetReports?: Reports;
   showReportsFlagForGetReports?: boolean;
   reportIdToUpdate: number = 0;
-  status = ['Pending', 'Approved', 'Rejected'];
-  countries = ['USA', 'India', 'UK', 'Australia'];
-  cities = ['New York', 'Los Angeles', 'Chicago', 'Houston'];
-  hubs = ['Hub1', 'Hub2', 'Hub3', 'Hub4'];
   date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
   reportIdForDelete: any;
   isReportDeleted: any;
@@ -43,27 +58,28 @@ SelectedReport?: Reports;
   reportStatus: any;
   reportDate: any;
   reportMultipleFields: any;
+
   onselect(report: Reports): void {
     this.SelectedReport = report;
 
   }
 
 
- constructor(private reportsService: ReportsService) {
- }
+  constructor(private reportsService: ReportsService) {
+  }
 
   getReports(): void {
     this.reportsService.getReports()
-    .subscribe(reports => this.reports = reports
-    );
+      .subscribe(reports => this.reports = reports
+      );
   }
 
 
   deleteReport(id: number): void {
     this.reportsService.deleteReport(id)
-    .subscribe(() => {
-      this.reports = this.reports.filter(r => r.id !== id);
-    });
+      .subscribe(() => {
+        this.reports = this.reports.filter(r => r.id !== id);
+      });
   }
 
   addReport(): void {
@@ -79,25 +95,31 @@ SelectedReport?: Reports;
       city: city,
       hub: hub,
       status: status,
+      stops: 0,
+      kilometers: "0",
       date: new Date().getTime()
     };
     this.reportsService.addReport(this.newReport).subscribe();
     this.isReportAdded = true;
-
   }
 
   updateReport(report: Reports): void {
-    this.reportsService.updateReport(report)
-      .subscribe(() => {
-        this.reports = this.reports.map(r => r.id === report.id ? report : r);
-      });
+    this.reportsService.updateReport(report).subscribe(
+      () => {
+        this.updateMessage = 'Report updated successfully';
+        this.reports = this.reports.map(r => (r.id === report.id ? report : r));
+      },
+      error => console.error('Error updating report:', error)
+    );
   }
+
+
 
   getReportById(id: number): void {
     this.reportsService.getReportById(id)
-    .subscribe(report => {
-      this.reports.push(report);
-    });
+      .subscribe(report => {
+        this.reports.push(report);
+      });
   }
 
   ngOnInit() {
@@ -116,18 +138,17 @@ SelectedReport?: Reports;
 
   deleteReportById() {
     this.reportsService.deleteReport(this.reportId)
-    .subscribe(() => {
-      this.deleteMessage = "Report deleted successfully";
-      this.getReports();
-    });
+      .subscribe(() => {
+        this.deleteMessage = "Report deleted successfully";
+        this.getReports();
+      });
   }
 
   filterReportsById(): void {
     if (this.reportId) {
       this.reports = this.reports.filter(r => r.id === this.reportId);
 
-    }else
-    {
+    } else {
       console.log("No id provided");
     }
   }
@@ -137,10 +158,10 @@ SelectedReport?: Reports;
     if (this.reportName) {
       this.reports = this.reports.filter(r => r.name === this.reportName);
     } else {
-        // If no name is provided, show all reports
-        this.getReports();
-      }
+      // If no name is provided, show all reports
+      this.getReports();
     }
+  }
 
 
   filterReportsByCountry() {
@@ -197,6 +218,7 @@ SelectedReport?: Reports;
     showStatus: false,
   };
   selectedReport: any;
+  searchReportId: any;
 
 
   applyFilters() {
@@ -216,6 +238,31 @@ SelectedReport?: Reports;
   filterReports() {
     this.reports = this.reports.filter(r => r.id === this.reportId);
   }
+
+  searchReport() {
+    this.reports = this.reports.filter(r => r.id === this.reportId);
+  }
+
+  exportToExcel() {
+    this.reportsService.ExportToExcel().subscribe((data) => {
+      const today = new Date();
+      const dateString = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      const filename = `Reports_${dateString}.xlsx`;
+
+      const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+      // Save the file with a specific name
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+
 }
+
 
 
