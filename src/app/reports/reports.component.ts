@@ -84,33 +84,19 @@ export class ReportsComponent {
       });
   }
 
-  addReport() {
-    this.reportsService.addReport(this.newReport).subscribe(
-      (response) => {
-        console.log('Report added successfully:', response);
-        this.newReport = {
-          name: '',
-          country: '',
-          city: '',
-          hub: '',
-          status: '',
-          stops: 0,
-          kilometers: "",
-          date: 0,
-          id: 0
-        };
-        this.addForm.resetForm();
-      },
-      (error: HttpErrorResponse) => {
-        if (error.status === 400) {
-          console.error('Bad Request. Please check your data and try again.');
-          // Optionally, you can handle specific validation errors here
-        } else {
+  addReport(): void {
+    if (this.form?.valid) {
+      console.log('Form data:', this.form.value);
+
+      this.reportsService.addReport(this.form.value).subscribe(
+        () => {
+          console.log('Report added successfully');
+        },
+        (error) => {
           console.error('Error adding report:', error);
-          // Handle other types of errors (e.g., server errors)
         }
-      }
-    );
+      );
+    }
   }
 
 
@@ -128,11 +114,11 @@ export class ReportsComponent {
 
 
   getReportById(id: number): void {
-   if (this.reports === null) {
+    if (this.reports === null) {
       this.updateMessage = "Invalid report ID.";
       return;
     }
-   this.reportsService.getReportById(id)
+    this.reportsService.getReportById(id)
       .subscribe(
         (report) => {
           this.selectedReportForGetReports = report;
@@ -245,6 +231,8 @@ export class ReportsComponent {
   };
   selectedReport: any;
   searchReportId: any;
+  newVehicle: any;
+
 
 
   applyFilters() {
@@ -284,6 +272,9 @@ export class ReportsComponent {
   }
 
 
+  isAlreadyExist(name: string) {
+    return this.reports.some(r => r.name === name && r.id !== this.reportId && r.country === this.reportCountry && r.city === this.reportCity && r.hub === this.reportHub && r.status === this.reportStatus && r.date === this.reportDate && r.kilometers === this.reportMultipleFields && r.stops);
+  }
 }
 
 

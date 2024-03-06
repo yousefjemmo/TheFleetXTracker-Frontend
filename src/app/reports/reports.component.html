@@ -32,7 +32,7 @@
           <td>{{ report.hub }}</td>
           <td>{{ report.status }}</td>
           <td>{{ report.stops }}</td>
-          <td>{{ report.kilometers }}</td>
+          <td>{{ report.kilometers | number:'1.0-2' }} km }}</td>
           <td>{{ report.date | date: 'yyyy-MM-dd' }}</td>
           <td>
             <button mat-icon-button color="primary" (click)="showUpdateForm(report)">
@@ -57,7 +57,7 @@
         <p><strong>Hub:</strong> {{ SelectedReport.hub }}</p>
         <p><strong>Status:</strong> {{ SelectedReport.status }}</p>
         <p><strong>Stops:</strong> {{ SelectedReport.stops }}</p>
-        <p><strong>Kilometers:</strong> {{ SelectedReport.kilometers }}</p>
+        <p><strong>Kilometers:</strong> {{ SelectedReport.kilometers | number:'1.0-2' }} km }}</p>
         <p><strong>Date:</strong> {{ SelectedReport.date | date: 'yyyy-MM-dd' }}</p>
       </div>
     </div>
@@ -174,67 +174,120 @@
   <!-- Add vehicle form -->
   <mat-tab label="Add vehicle">
     <div class="add-form">
-      <h2>Add New vehicle</h2>
-      <form class="add-vehicle-form" (submit)="addReport()" #addForm="ngForm">
-        <label for="addReportName">ID:</label>
-        <input type="number" id="addReportId" name="addReportId" [(ngModel)]="newReport.id" required>
-
-        <label for="addReportName">Name:</label>
-        <input type="text" id="addReportName" name="addReportName" [(ngModel)]="newReport.name" required>
-
-        <label for="addReportCountry">Country:</label>
-        <input type="text" id="addReportCountry" name="addReportCountry" [(ngModel)]="newReport.country" required>
-
-        <label for="addReportCity">City:</label>
-        <input type="text" id="addReportCity" name="addReportCity" [(ngModel)]="newReport.city" required>
-
-        <label for="addReportHub">Hub:</label>
-        <input type="text" id="addReportHub" name="addReportHub" [(ngModel)]="newReport.hub" required>
-
-        <label for="addReportStatus">Status:</label>
-        <input type="text" id="addReportStatus" name="addReportStatus" [(ngModel)]="newReport.status" required>
-
-        <label for="addReportStops">Stops:</label>
-        <input type="number" id="addReportStops" name="addReportStops" [(ngModel)]="newReport.stops" required>
-
-        <label for="addReportKilometers">Kilometers:</label>
-        <input type="number" id="addReportKilometers" name="addReportKilometers" [(ngModel)]="newReport.kilometers" required>
-
-        <label for="addReportDate">Date:</label>
-        <input type="text" id="addReportDate" name="addReportDate" [(ngModel)]="newReport.date" required>
-
-        <button type="submit">Add Vehicle</button>
-      </form>
+      <h2>Add vehicle</h2>
+      <form (ngSubmit)="addReport()" #vehickeForm="ngForm">
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput type="text" name="name" placeholder="Name" [(ngModel)]="newReport.name" #name="ngModel" required aria-placeholder="Vehicle Name">
+            <mat-error *ngIf="name.invalid">name.invalid && (name.dirty || name.touched)</mat-error>
+          </mat-form-field>
+          <div *ngIf="isAlreadyExist(newReport.name)">
+            <p class="error-message">Vehicle already exist</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>Country</mat-label>
+            <input matInput type="text" name="country" placeholder="Country" [(ngModel)]="newReport.country" #country="ngModel" required aria-placeholder="Country">
+            <mat-error *ngIf="country.invalid">country.invalid && (country.dirty || country.touched)</mat-error>
+          </mat-form-field>
     </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input matInput type="text" name="city" placeholder="City" [(ngModel)]="newReport.city" #city="ngModel" required aria-placeholder="City">
+        <mat-error *ngIf="city.invalid">city.invalid && (city.dirty || city.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Hub</mat-label>
+        <input matInput type="text" name="hub" placeholder="Hub" [(ngModel)]="newReport.hub" #hub="ngModel" required aria-placeholder="Hub">
+        <mat-error *ngIf="hub.invalid">hub.invalid && (hub.dirty || hub.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <input matInput type="text" name="status" placeholder="Status" [(ngModel)]="newReport.status" #status="ngModel" required aria-placeholder="Status">
+        <mat-error *ngIf="status.invalid">status.invalid && (status.dirty || status.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Stops</mat-label>
+        <input matInput type="number" name="stops" placeholder="Stops" [(ngModel)]="newReport.stops" #stops="ngModel" required aria-placeholder="Stops">
+        <mat-error *ngIf="stops.invalid">stops.invalid && (stops.dirty || stops.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Kilometers</mat-label>
+        <input matInput type="number" name="kilometers" placeholder="Kilometers" [(ngModel)]="newReport.kilometers" #kilometers="ngModel" required aria-placeholder="Kilometers">
+        <mat-error *ngIf="kilometers.invalid">kilometers.invalid && (kilometers.dirty || kilometers.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input matInput type="date" name="date" placeholder="Date" [(ngModel)]="newReport.date" #date="ngModel" required aria-placeholder="Date">
+        <mat-error *ngIf="date.invalid">date.invalid && (date.dirty || date.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary" type="submit" [disabled]="vehickeForm.invalid">Add vehicle</button>
+  </form>
+</div>
   </mat-tab>
+
+
 
   <!-- Search vehicle form -->
 
   <mat-tab label="Search vehicle">
-    <div class ="find-vehicle-form">
+    <div class="find-vehicle-form">
       <div>
         <h2>Search vehicle</h2>
         <label for="searchReportId">Search by ID:</label>
         <input type="number" id="searchReportId" name="searchReportId" [(ngModel)]="searchReportId" required>
-        <button (click)="getReportById(reportId)">Search</button>
+        <button (click)="getReportById(searchReportId)">Search</button>
       </div>
 
       <div *ngIf="selectedReportForGetReports">
         <h2>Vehicle Details</h2>
-        <p><strong>Report ID:</strong> {{ selectedReportForGetReports.id }}</p>
-        <p><strong>Name:</strong> {{ selectedReportForGetReports.name }}</p>
-        <p><strong>Country:</strong> {{ selectedReportForGetReports.country }}</p>
-        <p><strong>City:</strong> {{ selectedReportForGetReports.city }}</p>
-        <p><strong>Hub:</strong> {{ selectedReportForGetReports.hub }}</p>
-        <p><strong>Status:</strong> {{ selectedReportForGetReports.status }}</p>
-        <p><strong>Stops:</strong> {{ selectedReportForGetReports.stops }}</p>
-        <p><strong>Kilometers:</strong> {{ selectedReportForGetReports.kilometers }}</p>
-        <p><strong>Date:</strong> {{ selectedReportForGetReports.date | date: 'yyyy-MM-dd' }}</p>
+        <table>
+          <tr>
+            <th>Report ID</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>City</th>
+            <th>Hub</th>
+            <th>Status</th>
+            <th>Stops</th>
+            <th>Kilometers</th>
+            <th>Date</th>
+          </tr>
+          <tr>
+            <td>{{ selectedReportForGetReports.id }}</td>
+            <td>{{ selectedReportForGetReports.name }}</td>
+            <td>{{ selectedReportForGetReports.country }}</td>
+            <td>{{ selectedReportForGetReports.city }}</td>
+            <td>{{ selectedReportForGetReports.hub }}</td>
+            <td>{{ selectedReportForGetReports.status }}</td>
+            <td>{{ selectedReportForGetReports.stops }}</td>
+            <td>{{ selectedReportForGetReports.kilometers | number:'1.0-2' }} km</td>
+            <td>{{ selectedReportForGetReports.date | date: 'yyyy-MM-dd' }}</td>
+          </tr>
+        </table>
       </div>
-      <div *ngIf="selectedReportForGetReports == null && reportId">
+
+      <div *ngIf="selectedReportForGetReports === null && searchReportId">
         <p>No vehicle found with this ID</p>
       </div>
     </div>
   </mat-tab>
+
+
+
 </mat-tab-group>
 

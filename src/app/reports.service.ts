@@ -37,7 +37,7 @@ export class ReportsService {
   }
 
   addReport(report: Reports): Observable<Reports> {
-    const url = 'api/TheFleetXTracker/';
+    const url = 'api/TheFleetXTracker';
 
     return this.http.post<Reports>(url, JSON.stringify(report), httpOptions);
   }
