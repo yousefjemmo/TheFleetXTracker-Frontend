@@ -3,6 +3,7 @@ import {Reports} from "../reports";
 import {ReportsService} from "../reports.service";
 import {NgForm} from "@angular/forms";
 import {formatDate} from "@angular/common";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 
@@ -28,7 +29,7 @@ export class ReportsComponent {
     date: 0
   };
   updateMessage: string = "";
-  newReport: Reports = {id: 0, name: '', country: '', city: '', hub: '', status: '', stops: 0, kilometers: "", date: 0};
+  newReport: {id: number; date: number; country: string; hub: string; city: string; kilometers: string; name: string; stops: number; status: string } = {id: 0, name: '', country: '', city: '', hub: '', status: '', stops: 0, kilometers: "", date: 0};
   isReportAdded: boolean = false;
   showReportsFlag: any;
   deleteMessage: String = "";
@@ -58,6 +59,7 @@ export class ReportsComponent {
   reportStatus: any;
   reportDate: any;
   reportMultipleFields: any;
+  private addForm: any;
 
   onselect(report: Reports): void {
     this.SelectedReport = report;
@@ -82,26 +84,36 @@ export class ReportsComponent {
       });
   }
 
-  addReport(): void {
-    const {id, name, country, city, hub, status, date} = this.newReport;
-
-    if (!id || !name || !country || !city || !hub || !status || !date) {
-      return;
-    }
-    this.newReport = {
-      id: 0,
-      name: name,
-      country: country,
-      city: city,
-      hub: hub,
-      status: status,
-      stops: 0,
-      kilometers: "0",
-      date: new Date().getTime()
-    };
-    this.reportsService.addReport(this.newReport).subscribe();
-    this.isReportAdded = true;
+  addReport() {
+    this.reportsService.addReport(this.newReport).subscribe(
+      (response) => {
+        console.log('Report added successfully:', response);
+        this.newReport = {
+          name: '',
+          country: '',
+          city: '',
+          hub: '',
+          status: '',
+          stops: 0,
+          kilometers: "",
+          date: 0,
+          id: 0
+        };
+        this.addForm.resetForm();
+      },
+      (error: HttpErrorResponse) => {
+        if (error.status === 400) {
+          console.error('Bad Request. Please check your data and try again.');
+          // Optionally, you can handle specific validation errors here
+        } else {
+          console.error('Error adding report:', error);
+          // Handle other types of errors (e.g., server errors)
+        }
+      }
+    );
   }
+
+
 
   updateReport(report: Reports): void {
     this.reportsService.updateReport(report).subscribe(
@@ -116,10 +128,24 @@ export class ReportsComponent {
 
 
   getReportById(id: number): void {
-    this.reportsService.getReportById(id)
-      .subscribe(report => {
-        this.reports.push(report);
-      });
+   if (this.reports === null) {
+      this.updateMessage = "Invalid report ID.";
+      return;
+    }
+   this.reportsService.getReportById(id)
+      .subscribe(
+        (report) => {
+          this.selectedReportForGetReports = report;
+          this.reportIdToUpdate = report.id;
+        },
+        (error) => {
+          if (error.status === null) {
+            this.updateMessage = "Report not found.";
+          } else {
+            this.updateMessage = "Error occurred while getting the report.";
+          }
+        }
+      );
   }
 
   ngOnInit() {
@@ -236,10 +262,6 @@ export class ReportsComponent {
 
 
   filterReports() {
-    this.reports = this.reports.filter(r => r.id === this.reportId);
-  }
-
-  searchReport() {
     this.reports = this.reports.filter(r => r.id === this.reportId);
   }
 

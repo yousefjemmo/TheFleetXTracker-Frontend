@@ -2,6 +2,7 @@
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
+  height: 100vh; /* Set the height of the body to 100% of the viewport */
 }
 
 /* Mat-toolbar styles */
@@ -21,7 +22,7 @@ button[mat-icon-button] {
 
 /* Mat-sidenav styles */
 mat-sidenav-container {
-  height: 100vh;
+  height: 100vh; /* Set the height of the container to 100% of the viewport */
 }
 
 mat-sidenav {
@@ -35,6 +36,8 @@ mat-nav-list a {
 
 mat-sidenav-content {
   padding: 16px;
+  height: 100%; /* Set the height of the content to 100% of the container */
+  box-sizing: border-box; /* Include padding and border in the height calculation */
 }
 
 /* Additional styling for the content inside mat-sidenav-content */
@@ -46,4 +49,15 @@ router-outlet {
 /* Hover effect for mat-nav-list items */
 mat-nav-list a:hover {
   background-color: #0D47A1; /* Darker shade on hover */
+}
+
+.logo {
+  height: 30px; /* Adjust the height of the logo as needed */
+  margin-right: 10px; /* Add some margin to separate the logo from the text */
+}
+
+/* Active link styling */
+.active-link {
+  /* Add your styles for the active link here */
+  border-bottom: 2px solid white; /* Example: add a bottom border for emphasis */
 }

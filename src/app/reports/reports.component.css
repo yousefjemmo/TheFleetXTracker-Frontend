@@ -131,7 +131,7 @@ th {
   position: fixed;
   top: 100px;
   right: 20px;
-  z-index: 9000; /* Ensure the button is above other elements */
+  z-index: 10000; /* Ensure the button is above other elements */
 }
 
 .export-button button {

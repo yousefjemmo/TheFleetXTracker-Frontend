@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable} from "rxjs";
 import {Reports} from "./reports";
 
 const httpOptions = {
@@ -29,13 +29,17 @@ export class ReportsService {
     return this.http.get<Reports>(url);
   }
 
+
+
   deleteReport(id: number): Observable<Reports> {
     const url = `api/TheFleetXTracker/${id}`;
     return this.http.delete<Reports>(url, httpOptions);
   }
 
   addReport(report: Reports): Observable<Reports> {
-    return this.http.post<Reports>('api/TheFleetXTracker/', JSON.stringify(report), httpOptions);
+    const url = 'api/TheFleetXTracker/';
+
+    return this.http.post<Reports>(url, JSON.stringify(report), httpOptions);
   }
 
   updateReport(report: Reports): Observable<Reports> {

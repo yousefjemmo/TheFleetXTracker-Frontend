@@ -1,13 +1,11 @@
 <h1>Reports</h1>
-
-<div class="export-button">
-  <button mat-raised-button color="primary" (click)="exportToExcel()">
-    <mat-icon>file_download</mat-icon> Export to Excel
-  </button>
-</div>
-
 <mat-tab-group>
   <mat-tab label="Reports">
+    <div class="export-button">
+      <button mat-raised-button color="primary" (click)="exportToExcel()">
+        <mat-icon>file_download</mat-icon> Export to Excel
+      </button>
+    </div>
     <div class="report-list">
       <h1>Reports</h1>
       <table>
@@ -178,6 +176,9 @@
     <div class="add-form">
       <h2>Add New vehicle</h2>
       <form class="add-vehicle-form" (submit)="addReport()" #addForm="ngForm">
+        <label for="addReportName">ID:</label>
+        <input type="number" id="addReportId" name="addReportId" [(ngModel)]="newReport.id" required>
+
         <label for="addReportName">Name:</label>
         <input type="text" id="addReportName" name="addReportName" [(ngModel)]="newReport.name" required>
 
@@ -217,10 +218,17 @@
         <input type="number" id="searchReportId" name="searchReportId" [(ngModel)]="searchReportId" required>
         <button (click)="getReportById(reportId)">Search</button>
       </div>
+
       <div *ngIf="selectedReportForGetReports">
         <h2>Vehicle Details</h2>
         <p><strong>Report ID:</strong> {{ selectedReportForGetReports.id }}</p>
         <p><strong>Name:</strong> {{ selectedReportForGetReports.name }}</p>
+        <p><strong>Country:</strong> {{ selectedReportForGetReports.country }}</p>
+        <p><strong>City:</strong> {{ selectedReportForGetReports.city }}</p>
+        <p><strong>Hub:</strong> {{ selectedReportForGetReports.hub }}</p>
+        <p><strong>Status:</strong> {{ selectedReportForGetReports.status }}</p>
+        <p><strong>Stops:</strong> {{ selectedReportForGetReports.stops }}</p>
+        <p><strong>Kilometers:</strong> {{ selectedReportForGetReports.kilometers }}</p>
         <p><strong>Date:</strong> {{ selectedReportForGetReports.date | date: 'yyyy-MM-dd' }}</p>
       </div>
       <div *ngIf="selectedReportForGetReports == null && reportId">
