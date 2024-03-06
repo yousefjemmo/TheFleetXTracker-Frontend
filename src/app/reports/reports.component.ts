@@ -227,7 +227,9 @@ export class ReportsComponent {
     showCountry: false,
     showCity: false,
     showHub: false,
-    showStatus: false,
+    showStatus: false, showDate: undefined
+
+
   };
   selectedReport: any;
   searchReportId: any;
@@ -243,7 +245,8 @@ export class ReportsComponent {
         (this.filterOptions.showCountry ? r.country === this.reportCountry : true) &&
         (this.filterOptions.showCity ? r.city === this.reportCity : true) &&
         (this.filterOptions.showHub ? r.hub === this.reportHub : true) &&
-        (this.filterOptions.showStatus ? r.status === this.reportStatus : true)
+        (this.filterOptions.showStatus ? r.status === this.reportStatus : true) &&
+        (this.filterOptions.showDate ? r.date === this.reportDate : true)
       );
     });
   }

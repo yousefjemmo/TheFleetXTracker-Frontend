@@ -142,3 +142,23 @@ th {
 .export-button mat-icon {
   margin-right: 8px; /* Adjust the spacing between the icon and text */
 }
+
+/* Styled details section for Search Results */
+.search-result-table {
+  background-color: #e74c3c; /* Red background for the search result table */
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-table th,
+.search-result-table td {
+  padding: 12px;
+  text-align: left;
+  color: #fff; /* White text color for search result table */
+}
+
+.search-result-table th {
+  background-color: #c0392b; /* Darker red header background color */
+}
