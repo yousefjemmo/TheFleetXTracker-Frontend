@@ -1,53 +1,39 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0; /* Light grey background */
+  background-color: #f0f0f0;
+  margin: 0; /* Reset default body margin */
 }
 
-.mat-tab-group {
-  width: 70%;
-  margin: 20px auto;
+h1, h2 {
+  color: #3498db;
 }
 
-.mat-tab-body-wrapper {
-  background-color: #fff; /* White background for tab content */
-  padding: 20px;
+.export-button {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
 }
 
-.report-list {
-  background-color: #fff; /* White background for the report list */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.find-vehicle-form {
+  margin-top: 20px;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.find-vehicle-form label {
+  display: block;
+  margin-top: 10px;
+  color: #3498db;
 }
 
-.reports {
-  border-bottom: 1px solid #ccc; /* Separator between reports */
-  padding: 10px 0;
+.find-vehicle-form input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #3498db;
+  border-radius: 4px;
 }
 
-.report-list h2 {
-  color: #3498db; /* Blue header text color */
-}
-
-.btn-show-all-reports,
-.btn-show-details,
-.btn-delete,
-.btn-update,
-.btn-filter-by-id,
-.btn-filter-by-name,
-.btn-filter-by-country,
-.btn-filter-by-city,
-.btn-filter-by-hub,
-.btn-filter-by-status,
-.btn-filter-by-multiple-fields,
-button[type="submit"] {
-  background-color: #3498db; /* Blue button background color */
-  color: #fff; /* White button text color */
+.find-vehicle-form button {
+  background-color: #3498db;
+  color: #fff;
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
@@ -55,42 +41,114 @@ button[type="submit"] {
   margin-top: 8px;
 }
 
-.btn-show-all-reports:hover,
-.btn-show-details:hover,
-.btn-delete:hover,
-.btn-update:hover,
-.btn-filter-by-id:hover,
-.btn-filter-by-name:hover,
-.btn-filter-by-country:hover,
-.btn-filter-by-city:hover,
-.btn-filter-by-hub:hover,
-.btn-filter-by-status:hover,
-.btn-filter-by-multiple-fields:hover,
-button[type="submit"]:hover {
-  background-color: #297fb8; /* Darker blue on hover */
+.find-vehicle-form button:hover {
+  background-color: #297fb8;
 }
 
-/* Filter input styling */
-label {
+.filter-form {
+  margin-top: 20px;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: row;
+}
+
+.filter-options label {
+  margin-bottom: 10px;
+}
+
+.filter-inputs label {
   display: block;
   margin-top: 10px;
-  color: #3498db; /* Blue label color */
+  color: #3498db;
 }
 
-input {
+.filter-inputs input {
   padding: 8px;
   margin-top: 5px;
-  border: 1px solid #3498db; /* Blue border color */
+  border: 1px solid #3498db;
   border-radius: 4px;
 }
 
-/* Styled details section */
-.selected-report-details,
-.filtered-report-details,
-.update-form,
-.find-report-form,
-.add-report-form,
-.delete-report-form {
+.filter-inputs button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.filter-inputs button:hover {
+  background-color: #297fb8;
+}
+
+.search-result-table {
+  background-color: #e74c3c;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-table h2 {
+  color: #fff;
+}
+
+.search-result-table table {
+  width: 100%;
+}
+
+.search-result-table th, .search-result-table td {
+  padding: 12px;
+  text-align: left;
+  color: #fff;
+}
+
+.search-result-table th {
+  background-color: #c0392b;
+}
+
+.report-list {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.report-list h2 {
+  color: #3498db;
+}
+
+.report-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.report-list th, .report-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.report-list th {
+  background-color: #3498db;
+  color: #fff;
+}
+
+.isReportAdded, .isReportDeleted {
+  color: #2ecc71;
+}
+
+.NoReportFound {
+  color: #e74c3c;
+}
+
+.update-form {
   background-color: #fff;
   padding: 20px;
   margin-top: 20px;
@@ -98,67 +156,52 @@ input {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Success message for added report */
-.isReportAdded,
-.isReportDeleted {
-  color: #2ecc71; /* Green success message color */
+.update-form h2 {
+  color: #3498db;
 }
 
-/* Error message for no report found */
-p.NoReportFound {
-  color: #e74c3c; /* Red error message color */
+.update-report-form label {
+  display: block;
+  margin-top: 10px;
+  color: #3498db;
 }
 
-/* Table styling for the report list */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.update-report-form input {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #3498db;
+  border-radius: 4px;
 }
 
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd; /* Table border color */
+.update-report-form button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-th {
-  background-color: #3498db; /* Blue header background color */
-  color: #fff; /* White header text color */
+.update-report-form button:hover {
+  background-color: #297fb8;
 }
 
-.export-button {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  z-index: 10000; /* Ensure the button is above other elements */
-}
-
-.export-button button {
+.add-vehicle-button {
   display: flex;
-  align-items: center;
-}
-
-.export-button mat-icon {
-  margin-right: 8px; /* Adjust the spacing between the icon and text */
-}
-
-/* Styled details section for Search Results */
-.search-result-table {
-  background-color: #e74c3c; /* Red background for the search result table */
-  padding: 20px;
+  justify-content: flex-end;
   margin-top: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.search-result-table th,
-.search-result-table td {
-  padding: 12px;
-  text-align: left;
-  color: #fff; /* White text color for search result table */
+.add-vehicle-button button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.search-result-table th {
-  background-color: #c0392b; /* Darker red header background color */
+.add-vehicle-button button:hover {
+  background-color: #297fb8;
 }

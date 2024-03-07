@@ -271,6 +271,8 @@ export class ReportsComponent {
    this.router.navigate(['/add-vehicle-form']);
   }
 
+
+
 }
 
 
