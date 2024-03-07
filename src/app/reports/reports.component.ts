@@ -234,6 +234,7 @@ export class ReportsComponent {
   selectedReport: any;
   searchReportId: any;
   newVehicle: any;
+  showAddFormFlag: any;
 
 
 
@@ -277,6 +278,10 @@ export class ReportsComponent {
 
   isAlreadyExist(name: string) {
     return this.reports.some(r => r.name === name && r.id !== this.reportId && r.country === this.reportCountry && r.city === this.reportCity && r.hub === this.reportHub && r.status === this.reportStatus && r.date === this.reportDate && r.kilometers === this.reportMultipleFields && r.stops);
+  }
+
+  showAddForm() {
+    this.showAddFormFlag = !this.showAddFormFlag;
   }
 }
 
