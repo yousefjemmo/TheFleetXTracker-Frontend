@@ -1,10 +1,11 @@
-<mat-toolbar color="blue">
+<mat-toolbar color="cyan">
   <mat-toolbar-row>
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <img src="assets/logo.png" alt="Logo" width="250" height="75">
-    <span>The Fleet X Tracker</span>
+    <a routerLink="/reports">
+      <img src="assets/logo.png" alt="Logo" width="250" height="75">
+    </a>
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -12,6 +13,7 @@
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list>
       <a mat-list-item routerLink="reports">Reports</a>
+      <a mat-list-item routerLink="add-vehicle-form">Add Vehicle</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

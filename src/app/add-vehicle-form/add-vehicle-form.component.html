@@ -1,0 +1,72 @@
+<!-- Add vehicle form -->
+
+<div class="add-form" *ngIf="showAddFormFlag">
+  <h2>Add vehicle</h2>
+  <form (ngSubmit)="addReport()" #vehicleForm="ngForm">
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name="name" placeholder="Name" [(ngModel)]="newReport.name" #name="ngModel" required aria-placeholder="Vehicle Name">
+        <mat-error *ngIf="name.invalid">name.invalid && (name.dirty || name.touched)</mat-error>
+      </mat-form-field>
+      <div *ngIf="isAlreadyExist(newReport.name)">
+        <p class="error-message">Vehicle already exists</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Country</mat-label>
+        <input matInput type="text" name="country" placeholder="Country" [(ngModel)]="newReport.country" #country="ngModel" required aria-placeholder="Country">
+        <mat-error *ngIf="country.invalid">country.invalid && (country.dirty || country.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <input matInput type="text" name="city" placeholder="City" [(ngModel)]="newReport.city" #city="ngModel" required aria-placeholder="City">
+        <mat-error *ngIf="city.invalid">city.invalid && (city.dirty || city.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Hub</mat-label>
+        <input matInput type="text" name="hub" placeholder="Hub" [(ngModel)]="newReport.hub" #hub="ngModel" required aria-placeholder="Hub">
+        <mat-error *ngIf="hub.invalid">hub.invalid && (hub.dirty || hub.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <input matInput type="text" name="status" placeholder="Status" [(ngModel)]="newReport.status" #status="ngModel" required aria-placeholder="Status">
+        <mat-error *ngIf="status.invalid">status.invalid && (status.dirty || status.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Stops</mat-label>
+        <input matInput type="number" name="stops" placeholder="Stops" [(ngModel)]="newReport.stops" #stops="ngModel" required aria-placeholder="Stops">
+        <mat-error *ngIf="stops.invalid">stops.invalid && (stops.dirty || stops.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Kilometers</mat-label>
+        <input matInput type="number" name="kilometers" placeholder="Kilometers" [(ngModel)]="newReport.kilometers" #kilometers="ngModel" required aria-placeholder="Kilometers">
+        <mat-error *ngIf="kilometers.invalid">kilometers.invalid && (kilometers.dirty || kilometers.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input matInput type="date" name="date" placeholder="Date" [(ngModel)]="newReport.date" #date="ngModel" required aria-placeholder="Date">
+        <mat-error *ngIf="date.invalid">date.invalid && (date.dirty || date.touched)</mat-error>
+      </mat-form-field>
+    </div>
+    <div *ngIf="newReport.name && newReport.country && newReport.city && newReport.hub && newReport.status && newReport.stops && newReport.kilometers && newReport.date">
+      <p class="error-message">Please fill all the fields</p>
+    </div>
+
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="vehicleForm.invalid">Add vehicle</button>
+  </form>
+</div>

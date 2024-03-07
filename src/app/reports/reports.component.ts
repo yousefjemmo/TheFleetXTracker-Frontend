@@ -3,9 +3,6 @@ import {Reports} from "../reports";
 import {ReportsService} from "../reports.service";
 import {NgForm} from "@angular/forms";
 import {formatDate} from "@angular/common";
-import {HttpErrorResponse} from "@angular/common/http";
-
-
 
 @Component({
   selector: 'app-reports',
@@ -60,6 +57,7 @@ export class ReportsComponent {
   reportDate: any;
   reportMultipleFields: any;
   private addForm: any;
+  private router: any;
 
   onselect(report: Reports): void {
     this.SelectedReport = report;
@@ -83,22 +81,6 @@ export class ReportsComponent {
         this.reports = this.reports.filter(r => r.id !== id);
       });
   }
-
-  addReport(): void {
-    if (this.form?.valid) {
-      console.log('Form data:', this.form.value);
-
-      this.reportsService.addReport(this.form.value).subscribe(
-        () => {
-          console.log('Report added successfully');
-        },
-        (error) => {
-          console.error('Error adding report:', error);
-        }
-      );
-    }
-  }
-
 
 
   updateReport(report: Reports): void {
@@ -265,7 +247,6 @@ export class ReportsComponent {
 
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-      // Save the file with a specific name
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(blob);
       link.download = filename;
@@ -280,9 +261,16 @@ export class ReportsComponent {
     return this.reports.some(r => r.name === name && r.id !== this.reportId && r.country === this.reportCountry && r.city === this.reportCity && r.hub === this.reportHub && r.status === this.reportStatus && r.date === this.reportDate && r.kilometers === this.reportMultipleFields && r.stops);
   }
 
-  showAddForm() {
-    this.showAddFormFlag = !this.showAddFormFlag;
+  confirmDelete(id: number) {
+    if (confirm("Are you sure to delete " + id + "?")) {
+      this.deleteReport(id);
+    }
   }
+
+  showAddForm() {
+   this.router.navigate(['/add-vehicle-form']);
+  }
+
 }
 
 

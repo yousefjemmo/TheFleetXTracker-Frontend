@@ -18,13 +18,15 @@ import {MatTableModule} from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AddVehicleFormComponent } from './add-vehicle-form/add-vehicle-form.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ReportsComponent,
-    MenuComponent
+    MenuComponent,
+    AddVehicleFormComponent
   ],
   imports: [
     BrowserModule,
