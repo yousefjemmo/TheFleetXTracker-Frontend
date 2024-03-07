@@ -51,13 +51,4 @@ mat-nav-list a:hover {
   background-color: #0D47A1; /* Darker shade on hover */
 }
 
-.logo {
-  height: 30px; /* Adjust the height of the logo as needed */
-  margin-right: 10px; /* Add some margin to separate the logo from the text */
-}
 
-/* Active link styling */
-.active-link {
-  /* Add your styles for the active link here */
-  border-bottom: 2px solid white; /* Example: add a bottom border for emphasis */
-}
