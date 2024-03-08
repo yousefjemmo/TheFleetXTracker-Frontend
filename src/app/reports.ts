@@ -7,5 +7,5 @@ export interface Reports {
   status: string;
   stops: number;
   kilometers: string;
-  date: number;
+  date: Date | number;
 }

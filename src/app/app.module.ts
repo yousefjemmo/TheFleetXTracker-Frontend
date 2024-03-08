@@ -19,6 +19,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AddVehicleFormComponent } from './add-vehicle-form/add-vehicle-form.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { AddVehicleFormComponent } from './add-vehicle-form/add-vehicle-form.com
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

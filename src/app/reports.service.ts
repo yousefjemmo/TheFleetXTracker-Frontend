@@ -29,6 +29,11 @@ export class ReportsService {
     return this.http.get<Reports>(url);
   }
 
+  getReportByName(name: string): Observable<Reports[]> {
+    const url = `api/TheFleetXTracker/${name}`;
+    return this.http.get<Reports[]>(url);
+  }
+
 
 
   deleteReport(id: number): Observable<Reports> {

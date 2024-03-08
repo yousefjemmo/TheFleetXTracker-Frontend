@@ -1,4 +1,5 @@
 <h1>The Fleet X Tracker</h1>
+
 <div class="export-button">
   <button mat-raised-button color="primary" (click)="exportToExcel()">
     <mat-icon>file_download</mat-icon> Export to Excel
@@ -40,6 +41,10 @@
               <input type="checkbox" [(ngModel)]="filterOptions.showStatus"> Status
             </label>
 
+            <label>
+              <input type="checkbox" [(ngModel)]="filterOptions.showDate"> Date
+            </label>
+
           </div>
 
           <div class="filter-inputs">
@@ -77,6 +82,7 @@
               <mat-icon>filter_alt</mat-icon> Filter by Date:
             </label>
             <input *ngIf="filterOptions.showDate" type="date" id="filterByDate" name="filterByDate" [(ngModel)]="reportDate" placeholder="Enter Report Date">
+          </div>
 
             <button mat-raised-button color="primary" (click)="filterReports()">
               <mat-icon>search</mat-icon> Filter Reports
@@ -108,7 +114,8 @@
             <td>{{ selectedReportForGetReports.status }}</td>
             <td>{{ selectedReportForGetReports.stops }}</td>
             <td>{{ selectedReportForGetReports.kilometers | number:'1.0-2' }} km</td>
-            <td>{{ selectedReportForGetReports.date | date: 'yyyy-MM-dd' }}</td>
+            <td>{{ selectedReportForGetReports.date | date: 'dd-mm-yyyy' }}</td>
+
           </tr>
         </table>
       </div>
@@ -116,53 +123,52 @@
       <div *ngIf="selectedReportForGetReports === null && searchReportId">
         <p>No vehicle found with this ID</p>
       </div>
-    </div>
 
-    <!-- Reports List -->
-    <div class="report-list">
-      <h2>Reports
-        <button mat-icon-button color="primary" routerLink="/add-vehicle-form">
-          <mat-icon>add</mat-icon>
-        </button></h2>
-      <table>
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Country</th>
-          <th>City</th>
-          <th>Hub</th>
-          <th>Status</th>
-          <th>Stops</th>
-          <th>Kilometers</th>
-          <th>Date</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let report of reports" class="reports">
-          <td>{{ report.id }}</td>
-          <td>{{ report.name }}</td>
-          <td>{{ report.country }}</td>
-          <td>{{ report.city }}</td>
-          <td>{{ report.hub }}</td>
-          <td>{{ report.status }}</td>
-          <td>{{ report.stops }}</td>
-          <td>{{ report.kilometers | number:'1.0-2' }} km </td>
-          <td>{{ report.date | date: 'yyyy-MM-dd' }}</td>
-          <td>
-            <button mat-icon-button color="primary" (click)="showUpdateForm(report)">
-              <mat-icon>edit</mat-icon>
-            </button>
 
-            <button mat-icon-button color="warn" (click)="confirmDelete(report.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
+<!-- Reports List -->
+<div class="report-list">
+  <h2>Reports
+    <button mat-icon-button color="primary" routerLink="/add-vehicle-form">
+      <mat-icon>add</mat-icon>
+    </button></h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th>City</th>
+      <th>Hub</th>
+      <th>Status</th>
+      <th>Stops</th>
+      <th>Kilometers</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let report of reports" class="reports">
+      <td>{{ report.id }}</td>
+      <td>{{ report.name }}</td>
+      <td>{{ report.country }}</td>
+      <td>{{ report.city }}</td>
+      <td>{{ report.hub }}</td>
+      <td>{{ report.status }}</td>
+      <td>{{ report.stops }}</td>
+      <td>{{ report.kilometers | number:'1.0-2' }} km </td>
+      <td>{{ report.date | date: 'MM-dd-yyyy' }}</td>
+      <td>
+        <button mat-icon-button color="primary" (click)="showUpdateForm(report)">
+          <mat-icon>edit</mat-icon>
+        </button>
 
-          </td>
-        </tr>
-        </tbody>
-      </table>
+        <button mat-icon-button color="warn" (click)="confirmDelete(report.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
       <!-- Selected Report Details -->
       <div class="selected-report-details" *ngIf="SelectedReport">

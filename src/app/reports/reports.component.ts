@@ -45,19 +45,20 @@ export class ReportsComponent {
   selectedReportForGetReports?: Reports;
   showReportsFlagForGetReports?: boolean;
   reportIdToUpdate: number = 0;
-  date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
+  date = formatDate(new Date(), 'mm-dd-yyyy', 'en');
   reportIdForDelete: any;
   isReportDeleted: any;
   filteredReport: any;
-  reportName: any;
+  reportName: string = "";
   reportCountry: any;
   reportCity: any;
   reportHub: any;
   reportStatus: any;
   reportDate: any;
   reportMultipleFields: any;
-  private addForm: any;
   private router: any;
+
+
 
   onselect(report: Reports): void {
     this.SelectedReport = report;
@@ -150,19 +151,19 @@ export class ReportsComponent {
 
   filterReportsByName() {
     if (this.reportName) {
-      this.reports = this.reports.filter(r => r.name === this.reportName);
+      const lowerCaseName = this.reportName.toLowerCase();
+      this.reports = this.reports.filter(r => r.name.toLowerCase() === lowerCaseName);
     } else {
-      // If no name is provided, show all reports
-      this.getReports();
+      console.log("No name provided");
     }
   }
+
 
 
   filterReportsByCountry() {
     if (this.reportCountry) {
       this.reports = this.reports.filter(r => r.country === this.reportCountry);
     } else {
-      // If no country is provided, show all reports
       this.getReports();
     }
 
@@ -172,16 +173,55 @@ export class ReportsComponent {
     if (this.reportCity) {
       this.reports = this.reports.filter(r => r.city === this.reportCity);
     } else {
-      // If no city is provided, show all reports
       this.getReports();
     }
   }
+
+  filterReportsByDate() {
+    if (this.reportDate) {
+      // Convert reportDate to Date object
+      const selectedDate = new Date(this.reportDate);
+
+      // Format the date to 'MM-DD-YYYY'
+      const formattedDate = this.formatDate(selectedDate);
+
+      console.log('Selected Date:', selectedDate);
+      console.log('Formatted Date:', formattedDate);
+
+      // Filter reports based on the formatted date
+      this.reports = this.reports.filter(r => {
+        const reportDate = new Date(r.date);
+        const formattedReportDate = this.formatDate(reportDate);
+
+        console.log('Report Date:', reportDate);
+        console.log('Formatted Report Date:', formattedReportDate);
+
+        return formattedReportDate === formattedDate;
+      });
+    } else {
+      this.getReports();
+    }
+  }
+
+
+  formatDate(date: Date): string {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based
+    const day = date.getDate().toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}-${day}-${year}`;
+  }
+
+
+
+
+
+
+
 
   filterReportsByHub() {
     if (this.reportHub) {
       this.reports = this.reports.filter(r => r.hub === this.reportHub);
     } else {
-      // If no hub is provided, show all reports
       this.getReports();
     }
   }
@@ -191,17 +231,35 @@ export class ReportsComponent {
       const searchTerm = this.reportMultipleFields.toLowerCase();
       this.reports = this.reports.filter(
         r =>
+          r.id.toString().includes(searchTerm) ||
           r.name.toLowerCase().includes(searchTerm) ||
           r.country.toLowerCase().includes(searchTerm) ||
           r.city.toLowerCase().includes(searchTerm) ||
           r.hub.toLowerCase().includes(searchTerm) ||
-          r.status.toLowerCase().includes(searchTerm)
+          r.status.toLowerCase().includes(searchTerm) ||
+          r.date.toString().includes(searchTerm)
       );
     } else {
-      // If no field is provided, show all reports
       this.getReports();
     }
   }
+
+  filterReports() {
+    this.reports = this.reports.filter(report => {
+      return (
+        (!this.filterOptions.showId || report.id === this.reportId) &&
+        (!this.filterOptions.showName || report.name.toLowerCase().includes(this.reportName.toLowerCase())) &&
+        (!this.filterOptions.showCountry || report.country.toLowerCase() === this.reportCountry.toLowerCase()) &&
+        (!this.filterOptions.showCity || report.city.toLowerCase() === this.reportCity.toLowerCase()) &&
+        (!this.filterOptions.showHub || report.hub.toLowerCase() === this.reportHub.toLowerCase()) &&
+        (!this.filterOptions.showStatus || report.status.toLowerCase() === this.reportStatus.toLowerCase()) &&
+        (!this.filterOptions.showDate || report.date === this.reportDate)
+
+
+      );
+    });
+  }
+
 
   filterOptions = {
     showId: false,
@@ -209,7 +267,9 @@ export class ReportsComponent {
     showCountry: false,
     showCity: false,
     showHub: false,
-    showStatus: false, showDate: undefined
+    ShowDate: false,
+    showStatus: false,
+    showDate: false
 
 
   };
@@ -217,6 +277,7 @@ export class ReportsComponent {
   searchReportId: any;
   newVehicle: any;
   showAddFormFlag: any;
+
 
 
 
@@ -235,14 +296,10 @@ export class ReportsComponent {
   }
 
 
-  filterReports() {
-    this.reports = this.reports.filter(r => r.id === this.reportId);
-  }
-
   exportToExcel() {
     this.reportsService.ExportToExcel().subscribe((data) => {
       const today = new Date();
-      const dateString = today.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+      const dateString = today.toISOString().split('T')[0];
       const filename = `Reports_${dateString}.xlsx`;
 
       const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -270,8 +327,6 @@ export class ReportsComponent {
   showAddForm() {
    this.router.navigate(['/add-vehicle-form']);
   }
-
-
 
 }
 
