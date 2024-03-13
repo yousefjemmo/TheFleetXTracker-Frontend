@@ -208,3 +208,27 @@ h1 {
 .add-vehicle-button button:hover {
   background-color: #297fb8;
 }
+.export-button button,
+.find-vehicle-form button,
+.filter-inputs button,
+.update-report-form button,
+.add-vehicle-button button {
+  background-color: #009dff;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 44px; /* Updated border radius */
+  cursor: pointer;
+  box-shadow: inset 21px 21px 47px #0073ba,
+  inset -21px -21px 47px #00c7ff; /* Updated box shadow */
+}
+
+.export-button button:hover,
+.find-vehicle-form button:hover,
+.filter-inputs button:hover,
+.update-report-form button:hover,
+.add-vehicle-button button:hover {
+  background-color: #297fb8;
+}
+
+
